@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% block content  %}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Product List </h4>
+            </div>
+            <div class="card-body--">
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="serial">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Quantity in Stock</th>
+                                <th scope="col">Quantity Sold</th>
+                                <th scope="col">Cost per item</th>
+                                <th scope="col">Sales or revenue</th>
+                                <th scope="col">Stock Date</th>
+                                <th scope="col">Last Sales Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for inventory in inventories %}
+                            <tr>
+                                <td class="serial">{{ forloop.counter }}</td>
+                                <th scope="row">{{ inventory.name }}</th>
+                                <th scope="row">{{ inventory.quantity_in_stock }}</th>
+                                <th scope="row">{{ inventory.quantity_sold }}</th>
+                                <th scope="row">{{ inventory.cost_per_item }}</th>
+                                <th scope="row">{{ inventory.sales }}</th>
+                                <th scope="row">{{ inventory.stock_date }}</th>
+                                <th scope="row">{{ inventory.last_sales_date }}</th>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div> <!-- /.card -->
+    </div>  <!-- /.col-lg-8 -->
+
+
+</div>
+
+
+<div class="content-section">
+    <div class="row mx-auto justify-content-center">
+        <div class="card m-4" style="width:90%;">
+            <div class="card-body">
+                <div id="chart1"></div>
+            </div>
+        </div>
+
+        <div class="card m-4" style="width:90%;">
+            <div class="card-body">
+                <div id="chart2"></div>
+            </div>
+        </div>
+        <div class="card m-4" style="width:90%;">
+            <div class="card-body">
+                <div id="chart3"></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript">
+    var graph1 = {{ sales_graph|safe }}
+    Plotly.plot("chart1", graph1, {})
+
+    var graph2 = {{ best_perfoming_product|safe }}
+    Plotly.plot("chart2", graph2, {})
+
+    var graph3 = {{ product_in_stock|safe }}
+    Plotly.plot("chart3", graph3, {})
+</script>
+{% endblock %}
